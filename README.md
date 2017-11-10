@@ -1,2 +1,3 @@
-# madam-pince
-(WIP) A memento database client
+# Madam Pince
+
+(Work In Progress) A memento database web client

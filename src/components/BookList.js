@@ -21,10 +21,10 @@ const BookList = ({ books }) => {
 
 BookList.propTypes = {
   books: PropTypes.arrayOf(PropTypes.shape({
-    bookId: PropTypes.string,
-    bookTitle: PropTypes.string,
+    bookId: PropTypes.string.isRequired,
+    bookTitle: PropTypes.string.isRequired,
     bookSubtitle: PropTypes.string,
-    bookAuthor: PropTypes.string
+    bookAuthor: PropTypes.string.isRequired
   })).isRequired
 }
 

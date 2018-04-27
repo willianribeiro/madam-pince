@@ -17,6 +17,7 @@ class App extends Component {
       })
       .catch(error => {
         this.setState({ error: error, fetching: false })
+        console.error(error)
       })
   }
 

@@ -21,18 +21,22 @@ function list_entries() {
     pageSize: 1500,
     fields: '0,36,1'
   }
+
   return MementoApi.list_entries(LIBRARY_ID, params)
     .then(response => {
-      const output = response.entries.map(book => {
-        return {
-          ...book,
-          bookId: book.id,
-          bookTitle: book.fields[0].value,
-          bookSubtitle: book.fields[1].value,
-          bookAuthor: book.fields[2].value
-        }
-      })
-      return output
+      const books = response.entries
+        .filter(book => book.status === 'active')
+        .map(book => {
+          return {
+            ...book,
+            bookId: book.id,
+            bookTitle: book.fields[0].value,
+            bookSubtitle: book.fields[1].value,
+            bookAuthor: book.fields[2].value
+          }
+        })
+
+      return books
     })
 }
 

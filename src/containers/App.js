@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MadamPinceApi from '../services/MadamPinceApi'
+import LocalStorageService from '../services/LocalStorageService'
 import BookList from '../components/BookList'
 
 class App extends Component {
@@ -11,14 +12,22 @@ class App extends Component {
   }
 
   componentDidMount() {
-    MadamPinceApi.list_entries()
-      .then(entries => {
-        this.setState({ books: entries, fetching: false })
-      })
-      .catch(error => {
-        this.setState({ error: error, fetching: false })
-        console.error(error)
-      })
+    const books = LocalStorageService.loadBooks()
+
+    if (books) {
+      this.setState({ books: books, fetching: false })
+    }
+    else {
+      MadamPinceApi.list_entries()
+        .then(entries => {
+          this.setState({ books: entries, fetching: false })
+          LocalStorageService.saveBooks(entries)
+        })
+        .catch(error => {
+          this.setState({ error: error, fetching: false })
+          console.error(error)
+        })
+    }
   }
 
   render() {

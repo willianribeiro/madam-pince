@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { accent_fold } from '../utils'
 import BookFilter from './BookFilter'
+import BookCard from './BookCard'
 import NoResult from './NoResult'
 
 class BookList extends React.Component {
@@ -48,25 +49,19 @@ class BookList extends React.Component {
       <div>
         <BookFilter onFilter={this.onFilter} />
 
-        {!this.hasBook(books) && <NoResult books={books} />}
+        {this.hasBook(books) && books.map(book => (
+          <BookCard
+            key={book.bookId}
+            bookId={book.bookId}
+            bookTitle={book.bookTitle}
+            bookSubtitle={book.bookSubtitle}
+            bookAuthor={book.bookAuthor}
+          />
+        ))}
 
-        {this.hasBook(books) &&
-          <ul>
-            {
-              books.map(book => {
-                return (
-                  <li key={book.bookId}>
-                    <h2>{book.bookTitle}</h2>
-                    <p>{book.bookSubtitle}</p>
-                    <p>{book.bookAuthor}</p>
-                  </li>
-                )
-              })
-            }
-          </ul>
-        }
+        {!this.hasBook(books) && <NoResult books={books} />}
       </div>
-    );
+    )
   }
 }
 
@@ -79,4 +74,4 @@ BookList.propTypes = {
   })).isRequired
 }
 
-export default BookList;
+export default BookList

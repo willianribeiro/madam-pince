@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import { accent_fold } from '../utils'
 import BookFilter from './BookFilter'
 import BookList from './BookList'
+import BookDetails from './BookDetails'
 import NoResult from './NoResult'
 import MadamPinceApi from '../services/MadamPinceApi'
 
 class BookWrapper extends React.Component {
   state = {
-    books: []
+    books: [],
+    bookDetails: null
   }
 
   componentWillMount() {
@@ -43,18 +45,19 @@ class BookWrapper extends React.Component {
 
   onBookCardClick = bookId => {
     MadamPinceApi.get_entry(bookId)
-      .then(book => console.log(book))
+      .then(book => this.setState({ bookDetails: book }))
       .catch(error => console.log(error))
   }
 
   hasBook = (books = []) => books.length > 0
 
   render() {
-    const { books } = this.state
+    const { books, bookDetails } = this.state
 
     return (
       <div>
         <BookFilter onFilter={this.onFilterClick} />
+        {bookDetails && <BookDetails fields={bookDetails.fields} />}
         {this.hasBook(books) && <BookList books={books} onBookCardClick={this.onBookCardClick} />}
         {!this.hasBook(books) && <NoResult books={books} />}
       </div>

@@ -10,7 +10,8 @@ import MadamPinceApi from '../services/MadamPinceApi'
 class BookWrapper extends React.Component {
   state = {
     books: [],
-    bookDetails: null
+    bookDetails: null,
+    bookDetailsVisible: false
   }
 
   componentWillMount() {
@@ -45,19 +46,28 @@ class BookWrapper extends React.Component {
 
   onBookCardClick = bookId => {
     MadamPinceApi.get_entry(bookId)
-      .then(book => this.setState({ bookDetails: book }))
+      .then(book => {
+        this.setState({
+          bookDetails: book,
+          bookDetailsVisible: true
+        })
+      })
       .catch(error => console.log(error))
+  }
+
+  onCloseBookDetails = () => {
+    this.setState({ bookDetailsVisible: false })
   }
 
   hasBook = (books = []) => books.length > 0
 
   render() {
-    const { books, bookDetails } = this.state
+    const { books, bookDetails, bookDetailsVisible } = this.state
 
     return (
       <div>
         <BookFilter onFilter={this.onFilterClick} />
-        {bookDetails && <BookDetails fields={bookDetails.fields} />}
+        {bookDetailsVisible && <BookDetails fields={bookDetails.fields} onClose={this.onCloseBookDetails} />}
         {this.hasBook(books) && <BookList books={books} onBookCardClick={this.onBookCardClick} />}
         {!this.hasBook(books) && <NoResult books={books} />}
       </div>

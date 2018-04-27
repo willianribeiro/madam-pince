@@ -37,32 +37,48 @@ class BookList extends React.Component {
     }
   }
 
+  hasBook = (books = []) => books.length > 0
+
   render() {
+    const { books } = this.state
+
     return (
       <div>
-        <form onSubmit={this.filter} style={{ padding: '1em' }}>
-          <label htmlFor="filter">Filtrar por título, subtítulo ou autor: </label>
-          <input type="text" id="filter" />
-          <button type="submit">Filtrar</button>
-        </form>
-
-        <ul>
-          {
-            this.state.books.map(book => {
-              return (
-                <li key={book.bookId}>
-                  <h2>{book.bookTitle}</h2>
-                  <p>{book.bookSubtitle}</p>
-                  <p>{book.bookAuthor}</p>
-                </li>
-              )
-            })
-          }
-        </ul>
+        <Filter onFilter={this.filter} />
+        { this.hasBook(books) && <Books books={books} />}
+        { !this.hasBook(books) && <NoResult books={books} />}
       </div>
     );
   }
 }
+
+const Filter = ({ onFilter }) => (
+  <form onSubmit={onFilter} style={{ padding: '1em' }}>
+    <label htmlFor="filter">Filtrar por título, subtítulo ou autor: </label>
+    <input type="text" id="filter" />
+    <button type="submit">Filtrar</button>
+  </form>
+)
+
+const Books = ({ books }) => (
+  <ul>
+    {
+      books.map(book => {
+        return (
+          <li key={book.bookId}>
+            <h2>{book.bookTitle}</h2>
+            <p>{book.bookSubtitle}</p>
+            <p>{book.bookAuthor}</p>
+          </li>
+        )
+      })
+    }
+  </ul>
+)
+
+const NoResult = () => (
+  <strong style={{ display: 'block', padding: '1.5em 1em' }}>Nenhum livro encontrado.</strong>
+)
 
 BookList.propTypes = {
   books: PropTypes.arrayOf(PropTypes.shape({

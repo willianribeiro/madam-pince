@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MadamPinceApi from '../services/MadamPinceApi'
 import LocalStorageService from '../services/LocalStorageService'
-import BookList from '../components/BookList'
+import BookWrapper from '../components/BookWrapper'
 
 class App extends Component {
   state = {
@@ -35,7 +35,7 @@ class App extends Component {
     return (
       <main>
         { fetching && <div>Carregando...</div> }
-        { !fetching && <BookList books={books} /> }
+        { !fetching && <BookWrapper books={books} /> }
       </main>
     )
   }

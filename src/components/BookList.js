@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { accent_fold } from '../utils'
+import BookFilter from './BookFilter'
+import NoResult from './NoResult'
 
 class BookList extends React.Component {
   state = {
@@ -11,7 +13,7 @@ class BookList extends React.Component {
     this.setState({ books: this.props.books })
   }
 
-  filter = e => {
+  onFilter = e => {
     e.preventDefault()
     e.persist()
     const { books } = this.props
@@ -44,41 +46,29 @@ class BookList extends React.Component {
 
     return (
       <div>
-        <Filter onFilter={this.filter} />
-        { this.hasBook(books) && <Books books={books} />}
-        { !this.hasBook(books) && <NoResult books={books} />}
+        <BookFilter onFilter={this.onFilter} />
+
+        {!this.hasBook(books) && <NoResult books={books} />}
+
+        {this.hasBook(books) &&
+          <ul>
+            {
+              books.map(book => {
+                return (
+                  <li key={book.bookId}>
+                    <h2>{book.bookTitle}</h2>
+                    <p>{book.bookSubtitle}</p>
+                    <p>{book.bookAuthor}</p>
+                  </li>
+                )
+              })
+            }
+          </ul>
+        }
       </div>
     );
   }
 }
-
-const Filter = ({ onFilter }) => (
-  <form onSubmit={onFilter} style={{ padding: '1em' }}>
-    <label htmlFor="filter">Filtrar por título, subtítulo ou autor: </label>
-    <input type="text" id="filter" />
-    <button type="submit">Filtrar</button>
-  </form>
-)
-
-const Books = ({ books }) => (
-  <ul>
-    {
-      books.map(book => {
-        return (
-          <li key={book.bookId}>
-            <h2>{book.bookTitle}</h2>
-            <p>{book.bookSubtitle}</p>
-            <p>{book.bookAuthor}</p>
-          </li>
-        )
-      })
-    }
-  </ul>
-)
-
-const NoResult = () => (
-  <strong style={{ display: 'block', padding: '1.5em 1em' }}>Nenhum livro encontrado.</strong>
-)
 
 BookList.propTypes = {
   books: PropTypes.arrayOf(PropTypes.shape({

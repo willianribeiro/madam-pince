@@ -10,7 +10,7 @@ class App extends Component {
     didInvalidate: false
   }
 
-  componentWillMount() {
+  componentDidMount() {
     MadamPinceApi.list_entries()
       .then(entries => {
         this.setState({ books: entries, fetching: false })

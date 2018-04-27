@@ -1,8 +1,6 @@
 import MementoApi from './MementoApi'
-import {
-  USER_TOKEN,
-  LIBRARY_ID
-} from '../config'
+import { accent_fold } from '../utils'
+import { USER_TOKEN, LIBRARY_ID } from '../config'
 
 const api = {
   get_library,
@@ -34,6 +32,14 @@ function list_entries() {
             bookSubtitle: book.fields[1].value,
             bookAuthor: book.fields[2].value
           }
+        })
+        .sort((a, b) => {
+          const bookTitleA = accent_fold(a.bookTitle.toLowerCase())
+          const bookTitleB = accent_fold(b.bookTitle.toLowerCase())
+
+          return bookTitleA > bookTitleB
+            ? 1
+            : -1
         })
 
       return books

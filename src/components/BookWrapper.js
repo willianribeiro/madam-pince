@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { accent_fold } from '../utils'
 import BookFilter from './BookFilter'
 import BookList from './BookList'
-import BookDetails from './BookDetails'
+import BookDetailsModal from './BookDetailsModal'
 import NoResult from './NoResult'
 import MadamPinceApi from '../services/MadamPinceApi'
 
@@ -67,7 +67,7 @@ class BookWrapper extends React.Component {
     return (
       <div>
         <BookFilter onFilter={this.onFilterClick} />
-        {bookDetailsVisible && <BookDetails fields={bookDetails.fields} onClose={this.onCloseBookDetails} />}
+        {bookDetailsVisible && <BookDetailsModal fields={bookDetails.fields} onClose={this.onCloseBookDetails} />}
         {this.hasBook(books) && <BookList books={books} onBookCardClick={this.onBookCardClick} />}
         {!this.hasBook(books) && <NoResult books={books} />}
       </div>

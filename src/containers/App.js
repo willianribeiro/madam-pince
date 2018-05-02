@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const books = LocalStorageService.loadBooks()
+    const books = LocalStorageService.load_books()
 
     if (books) {
       this.setState({ books: books, fetching: false })
@@ -21,7 +21,7 @@ class App extends Component {
       MadamPinceApi.list_entries()
         .then(entries => {
           this.setState({ books: entries, fetching: false })
-          LocalStorageService.saveBooks(entries)
+          LocalStorageService.save_books(entries)
         })
         .catch(error => {
           this.setState({ error: error, fetching: false })

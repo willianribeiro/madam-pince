@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import MadamPinceApi from '../services/MadamPinceApi'
 import LocalStorageService from '../services/LocalStorageService'
 import BookWrapper from '../components/BookWrapper'
@@ -33,12 +34,20 @@ class App extends Component {
   render() {
     const { books, fetching } = this.state
     return (
-      <main>
+      <Main>
         { fetching && <div>Carregando...</div> }
         { !fetching && <BookWrapper books={books} /> }
-      </main>
+      </Main>
     )
   }
 }
+
+const Main = styled.main`
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 8px;
+  font-family: tahoma, sans-serif;
+`
 
 export default App

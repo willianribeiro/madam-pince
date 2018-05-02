@@ -16,7 +16,7 @@ const BookFilter = ({ onFilter }) => (
       <Label htmlFor="library">Biblioteca: </Label>
 
       <FilterLibrarySelector id="library">
-        <option value="literary" selected>Biblioteca Literária</option>
+        <option value="literary" defaultValue>Biblioteca Literária</option>
         <option value="spiritual">Biblioteca Espiritual</option>
       </FilterLibrarySelector>
     </Section>

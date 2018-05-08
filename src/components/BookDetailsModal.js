@@ -30,7 +30,7 @@ const BookDetailsModal = ({ fields, onClose }) => {
     <Modal>
       <ModalOverlay onClick={onClose} />
       <ModalBox>
-        <ModalClose onClick={onClose}>&#10060;</ModalClose>
+        <ModalCloseButton onClick={onClose}>&times;</ModalCloseButton>
 
         <BookCover>
           <BookCoverImg src={getBookCoverUrl()} />
@@ -80,7 +80,7 @@ const ModalBox = styled.div`
   color: #999;
 `
 
-const ModalClose = styled.div`
+const ModalCloseButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

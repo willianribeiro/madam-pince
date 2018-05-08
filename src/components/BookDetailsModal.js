@@ -1,10 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const BookDetailsModal = ({ fields, onClose }) => {
+class BookDetailsModal extends React.PureComponent {
 
-  const getBookCoverUrl = () => {
-    const covers = fields.filter(field => {
+  componentDidMount() {
+    document.body.style = 'overflow: hidden'
+  }
+
+  componentWillUnmount() {
+    document.body.style = 'overflow: initial'
+  }
+
+  getBookCoverUrl = () => {
+    const covers = this.props.fields.filter(field => {
       return (
         field.name === "Capa" &&
         field.type === "image"
@@ -16,33 +24,43 @@ const BookDetailsModal = ({ fields, onClose }) => {
       : "https://place-hold.it/150x250"
   }
 
-  const getFieldsToList = () => {
-    return fields.filter(field => {
+  getFieldsToList = () => {
+    return this.props.fields.filter(field => {
       return (field.id !== 30 && field.id !== 31 && field.id !== 8)
     })
   }
 
-  return (
-    <Modal>
-      <ModalOverlay onClick={onClose} />
-      <ModalBox>
-        <ModalCloseButton onClick={onClose}>&times;</ModalCloseButton>
+  pauseEvent = e => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
 
-        <BookCover>
-          <BookCoverImg src={getBookCoverUrl()} />
-        </BookCover>
+  render() {
+    const { onClose } = this.props
+    const coverUrl = this.getBookCoverUrl()
+    const fields = this.getFieldsToList()
 
-        <BookFields>
-          {getFieldsToList().map(field => (
-            <BookField key={field.id}>
-              <BookFieldTitle>{field.name}:</BookFieldTitle>
-              <BookFieldValue>{field.value || '-- não disponível --'}</BookFieldValue>
-            </BookField>
-          ))}
-        </BookFields>
-      </ModalBox>
-    </Modal>
-  )
+    return (
+      <Modal onClick={onClose}>
+        <ModalBox onClick={this.pauseEvent}>
+          <ModalCloseButton onClick={onClose}>&times;</ModalCloseButton>
+
+          <BookCover>
+            <BookCoverImg src={coverUrl} />
+          </BookCover>
+
+          <BookFields>
+            {fields.map(field => (
+              <BookField key={field.id}>
+                <BookFieldTitle>{field.name}:</BookFieldTitle>
+                <BookFieldValue>{field.value || '-- não disponível --'}</BookFieldValue>
+              </BookField>
+            ))}
+          </BookFields>
+        </ModalBox>
+      </Modal>
+    )
+  }
 }
 
 const Modal = styled.div`
@@ -53,14 +71,6 @@ const Modal = styled.div`
   right: 0;
   padding: 8px;
   overflow-y: auto;
-`
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-color: rgba(0, 0, 0, .9);
 `
 
@@ -70,7 +80,6 @@ const ModalBox = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 16px
-  border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
   color: #999;

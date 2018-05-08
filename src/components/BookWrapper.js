@@ -63,12 +63,9 @@ class BookWrapper extends React.Component {
 
   render() {
     const { books, bookDetails, bookDetailsVisible } = this.state
-    const styles = bookDetailsVisible
-      ? { overflow: 'hidden', height: '100%'}
-      : {}
 
     return (
-      <div style={styles}>
+      <div>
         {bookDetailsVisible && <BookDetailsModal fields={bookDetails.fields} onClose={this.onCloseBookDetails} />}
         <BookFilter onFilter={this.onFilterClick} />
         {this.hasBook(books) && <BookList books={books} onBookCardClick={this.onBookCardClick} />}

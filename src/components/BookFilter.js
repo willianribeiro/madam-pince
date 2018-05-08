@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const BookFilter = ({ onFilter }) => (
   <Filter onSubmit={onFilter}>
     <Section>
-      <Label htmlFor="filter">Filtrar por título, subtítulo ou autor: </Label>
+      <Label htmlFor="filter">Filtrar por título ou autor: </Label>
 
       <FilterBox>
         <FilterInput type="text" id="filter" />
@@ -12,14 +12,14 @@ const BookFilter = ({ onFilter }) => (
       </FilterBox>
     </Section>
 
-    <Section>
+    {/*<Section>
       <Label htmlFor="library">Biblioteca: </Label>
 
       <FilterLibrarySelector id="library">
         <option value="literary" defaultValue>Biblioteca Literária</option>
         <option value="spiritual">Biblioteca Espiritual</option>
       </FilterLibrarySelector>
-    </Section>
+    </Section>*/}
   </Filter>
 )
 
@@ -62,14 +62,14 @@ const FilterButton = styled.button`
   cursor: pointer;
 `
 
-const FilterLibrarySelector = styled.select`
-  box-sizing: border-box;
-  height: 35px;
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-`
+// const FilterLibrarySelector = styled.select`
+//   box-sizing: border-box;
+//   height: 35px;
+//   width: 100%;
+//   background-color: transparent;
+//   border: 1px solid #ccc;
+//   border-radius: 3px;
+// `
 
 const Section = styled.div`
   & + & {

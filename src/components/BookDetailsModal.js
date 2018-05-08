@@ -17,7 +17,7 @@ const BookDetailsModal = ({ fields, onClose }) => {
 
     return covers.length > 0
       ? covers[0].value
-      : "https://place-hold.it/150x200"
+      : "https://place-hold.it/150x250"
   }
 
   const getFieldsToList = () => {
@@ -98,7 +98,7 @@ const BookCover = styled.div`
 `
 
 const BookCoverImg = styled.img`
-  max-width: 100%;
+  height: 250px;
 `
 
 const BookFields = styled.div`

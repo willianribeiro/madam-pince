@@ -2,10 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const BookDetailsModal = ({ fields, onClose }) => {
-  // const pauseEvent = e => {
-  //   e.stopPropagation()
-  //   e.preventDefault()
-  // }
 
   const getBookCoverUrl = () => {
     const covers = fields.filter(field => {

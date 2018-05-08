@@ -66,8 +66,8 @@ class BookWrapper extends React.Component {
 
     return (
       <div>
-        <BookFilter onFilter={this.onFilterClick} />
         {bookDetailsVisible && <BookDetailsModal fields={bookDetails.fields} onClose={this.onCloseBookDetails} />}
+        <BookFilter onFilter={this.onFilterClick} />
         {this.hasBook(books) && <BookList books={books} onBookCardClick={this.onBookCardClick} />}
         {!this.hasBook(books) && <NoResult books={books} />}
       </div>

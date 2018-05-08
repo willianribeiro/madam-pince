@@ -50,14 +50,12 @@ const BookDetailsModal = ({ fields, onClose }) => {
 }
 
 const Modal = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+  padding: 8px;
   overflow-y: auto;
 `
 
@@ -72,11 +70,10 @@ const ModalOverlay = styled.div`
 
 const ModalBox = styled.div`
   position: relative;
-  display: inline-block;
-  padding: 36px;
-  margin: 8px;
   width: 100%;
   max-width: 800px;
+  margin: 0 auto;
+  padding: 16px
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
@@ -101,7 +98,7 @@ const BookCover = styled.div`
 `
 
 const BookCoverImg = styled.img`
-
+  max-width: 100%;
 `
 
 const BookFields = styled.div`

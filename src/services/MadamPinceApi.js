@@ -8,12 +8,12 @@ const api = {
   get_entry
 }
 
-function get_library() {
+function get_library(libraryId) {
   const params = { token: USER_TOKEN }
-  return MementoApi.get_library(LIBRARY_ID, params)
+  return MementoApi.get_library(libraryId, params)
 }
 
-function list_entries() {
+function list_entries(libraryId) {
   const params = {
     token: USER_TOKEN,
     pageSize: 1500,
@@ -46,7 +46,7 @@ function list_entries() {
     })
 }
 
-function get_entry(id) {
+function get_entry(id, libraryId) {
   const params = { token: USER_TOKEN }
   return MementoApi.get_entry(id, LIBRARY_ID, params)
 }

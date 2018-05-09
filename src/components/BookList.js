@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import BookCard from './BookCard'
 
-const BookList = ({ books, onBookCardClick }) => {
+export const BookList = ({ books, onBookCardClick = () => {} }) => {
   return (
     <List>
       {books.map(book => (
@@ -30,4 +31,12 @@ BookList.propTypes = {
   onBookCardClick: PropTypes.func
 }
 
-export default BookList
+const mapStateToProps = state => ({
+  books: state.ui.list.books
+})
+
+const mapDispatchToProps = dispatch => ({
+
+})
+
+export default connect(mapStateToProps)(BookList)

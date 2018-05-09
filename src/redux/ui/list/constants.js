@@ -1,0 +1,1 @@
+export const SET_FILTERED_BOOKS = 'ui:list:SET_FILTERED_BOOKS'

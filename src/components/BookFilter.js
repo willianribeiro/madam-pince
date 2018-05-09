@@ -1,18 +1,48 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { accent_fold } from '../utils'
+import { UIListActions } from '../redux/ui/list/actions'
 
-const BookFilter = ({ onFilter }) => (
-  <Filter onSubmit={onFilter}>
-    <Section>
-      <Label htmlFor="filter">Filtrar por título ou autor: </Label>
+export const BookFilter = ({ books, set_filtered_books }) => {
 
-      <FilterBox>
-        <FilterInput type="text" id="filter" />
-        <FilterButton type="submit">Filtrar</FilterButton>
-      </FilterBox>
-    </Section>
+  const filter = e => {
+    e.preventDefault()
+    e.persist()
+    const { filter } = e.target
+    const filterTitle = accent_fold(filter.value.trim().toLowerCase())
 
-    {/*<Section>
+    if (filterTitle) {
+      const filtered = books.filter(book => {
+        const bookTitle = accent_fold(book.bookTitle.trim().toLowerCase())
+        const bookSubtitle = accent_fold(book.bookSubtitle.trim().toLowerCase())
+        const bookAuthor = accent_fold(book.bookAuthor.trim().toLowerCase())
+        const bookTitleFound = bookTitle.indexOf(filterTitle) > -1
+        const bookAuthorFound = bookAuthor.indexOf(filterTitle) > -1
+        const bookSubtitleFound = bookSubtitle.indexOf(filterTitle) > -1
+
+        return (bookTitleFound || bookAuthorFound || bookSubtitleFound)
+      })
+
+      set_filtered_books(filtered)
+    }
+    else {
+      set_filtered_books(books)
+    }
+  }
+
+  return (
+    <Filter onSubmit={filter}>
+      <Section>
+        <Label htmlFor="filter">Filtrar por título ou autor: </Label>
+
+        <FilterBox>
+          <FilterInput type="text" id="filter" />
+          <FilterButton type="submit">Filtrar</FilterButton>
+        </FilterBox>
+      </Section>
+
+      {/*<Section>
       <Label htmlFor="library">Biblioteca: </Label>
 
       <FilterLibrarySelector id="library">
@@ -20,8 +50,9 @@ const BookFilter = ({ onFilter }) => (
         <option value="spiritual">Biblioteca Espiritual</option>
       </FilterLibrarySelector>
     </Section>*/}
-  </Filter>
-)
+    </Filter>
+  )
+}
 
 const Filter = styled.form`
   width: 100%;
@@ -83,4 +114,12 @@ const Label = styled.label`
   font-weight: bold;
 `
 
-export default BookFilter
+const mapStateToProps = state => ({
+  books: state.entities.book.entries
+})
+
+const mapDispatchToProps = dispatch => ({
+  set_filtered_books: books => dispatch(UIListActions.set_filtered_books(books))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookFilter)

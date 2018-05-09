@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import MadamPinceApi from '../services/MadamPinceApi'
-import LocalStorageService from '../services/LocalStorageService'
-import BookWrapper from '../components/BookWrapper'
+// import MadamPinceApi from '../services/MadamPinceApi'
+// import LocalStorageService from '../services/LocalStorageService'
+// import BookWrapper from '../components/BookWrapper'
+import BookList from '../components/BookList'
+import BookFilter from '../components/BookFilter'
+
+import { connect } from 'react-redux'
+import { bookActions } from '../redux/entities/book/actions'
 
 class App extends Component {
   state = {
@@ -13,30 +18,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const books = LocalStorageService.load_books()
-
-    if (books) {
-      this.setState({ books: books, fetching: false })
-    }
-    else {
-      MadamPinceApi.list_entries()
-        .then(entries => {
-          this.setState({ books: entries, fetching: false })
-          LocalStorageService.save_books(entries)
-        })
-        .catch(error => {
-          this.setState({ error: error, fetching: false })
-          console.error(error)
-        })
-    }
+    this.props.list_books()
   }
 
   render() {
-    const { books, fetching } = this.state
+
     return (
       <Main>
-        { fetching && <div>Carregando...</div> }
-        { !fetching && <BookWrapper books={books} /> }
+        <BookFilter />
+        <BookList />
       </Main>
     )
   }
@@ -51,4 +41,8 @@ const Main = styled.main`
   font-family: tahoma, sans-serif;
 `
 
-export default App
+const mapDispatchToProps = dispatch => ({
+  list_books: () => dispatch(bookActions.list())
+})
+
+export default connect(null, mapDispatchToProps)(App)

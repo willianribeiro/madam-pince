@@ -2,12 +2,17 @@ import { createReducer } from '../../utils'
 import {
   LIST_PENDING,
   LIST_FULFILLED,
-  LIST_REJECTED
+  LIST_REJECTED,
+  GET_PENDING,
+  GET_FULFILLED,
+  GET_REJECTED,
 } from './constants'
 
 const initialState = {
   entries: [],
+  entry: {},
   listing: false,
+  getting: false,
 }
 
 const bookReducer = createReducer(initialState, {
@@ -26,6 +31,23 @@ const bookReducer = createReducer(initialState, {
     ...state,
     listing: false
   }),
+
+  [GET_PENDING]: (state, action) => ({
+    ...state,
+    getting: true
+  }),
+
+  [GET_FULFILLED]: (state, action) => ({
+    ...state,
+    entry: action.payload.book,
+    getting: false
+  }),
+
+  [GET_REJECTED]: (state, action) => ({
+    ...state,
+    getting: false
+  }),
+
 })
 
 export default bookReducer

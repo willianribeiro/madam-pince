@@ -2,8 +2,9 @@ import actionCreators from './action-creators'
 import MadamPinceApi from '../../../services/MadamPinceApi'
 
 // EXPORT THUNKS
-export const bookActions = {
+export const BookActions = {
   list,
+  get
 }
 
 // THUNKS (ASYNC)
@@ -17,6 +18,21 @@ function list(libraryId = 'jQSwnoG2p') {
       })
       .catch(error => {
         dispatch(actionCreators.list_rejected())
+        console.error(error)
+      })
+  }
+}
+
+function get(id, libraryId = 'jQSwnoG2p') {
+  return (dispatch, getState) => {
+    dispatch(actionCreators.get_pending())
+
+    return MadamPinceApi.get_entry(id, libraryId)
+      .then(book => {
+        dispatch(actionCreators.get_fulfilled(book))
+      })
+      .catch(error => {
+        dispatch(actionCreators.get_rejected())
         console.error(error)
       })
   }

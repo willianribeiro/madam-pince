@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { BookActions } from '../redux/entities/book/actions'
+import { UIDetailsActions } from '../redux/ui/details/actions'
 
 class BookDetailsModal extends React.PureComponent {
 
   componentDidMount() {
+    this.props.get_book(this.props.bookId)
     document.body.style = 'overflow: hidden'
   }
 
@@ -12,7 +16,8 @@ class BookDetailsModal extends React.PureComponent {
   }
 
   getBookCoverUrl = () => {
-    const covers = this.props.fields.filter(field => {
+    const fields = this.props.book.fields || []
+    const covers = fields.filter(field => {
       return (
         field.name === "Capa" &&
         field.type === "image"
@@ -25,7 +30,9 @@ class BookDetailsModal extends React.PureComponent {
   }
 
   getFieldsToList = () => {
-    return this.props.fields.filter(field => {
+    const fields = this.props.book.fields || []
+
+    return fields.filter(field => {
       return (field.id !== 30 && field.id !== 31 && field.id !== 8)
     })
   }
@@ -36,14 +43,14 @@ class BookDetailsModal extends React.PureComponent {
   }
 
   render() {
-    const { onClose } = this.props
+    const { hide } = this.props
     const coverUrl = this.getBookCoverUrl()
     const fields = this.getFieldsToList()
 
     return (
-      <Modal onClick={onClose}>
+      <Modal onClick={hide}>
         <ModalBox onClick={this.pauseEvent}>
-          <ModalCloseButton onClick={onClose}>&times;</ModalCloseButton>
+          <ModalCloseButton onClick={hide}>&times;</ModalCloseButton>
 
           <BookCover>
             <BookCoverImg src={coverUrl} />
@@ -53,7 +60,7 @@ class BookDetailsModal extends React.PureComponent {
             {fields.map(field => (
               <BookField key={field.id}>
                 <BookFieldTitle>{field.name}:</BookFieldTitle>
-                <BookFieldValue>{field.value || '-- não disponível --'}</BookFieldValue>
+                <BookFieldValue>{field.value || '–'}</BookFieldValue>
               </BookField>
             ))}
           </BookFields>
@@ -63,6 +70,7 @@ class BookDetailsModal extends React.PureComponent {
   }
 }
 
+// INTERNAL COMPONENTS
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -123,4 +131,15 @@ const BookFieldValue = styled.p`
   word-wrap: break-word;
 `
 
-export default BookDetailsModal
+// REDUX CONNECTION
+const mapStateToProps = state => ({
+  bookId: state.ui.details.bookId,
+  book: state.entities.book.entry,
+})
+
+const mapDispatchToProps = dispatch => ({
+  get_book: bookId => dispatch(BookActions.get(bookId)),
+  hide: () => dispatch(UIDetailsActions.hide())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookDetailsModal)

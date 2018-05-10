@@ -1,15 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-// import MadamPinceApi from '../services/MadamPinceApi'
-// import LocalStorageService from '../services/LocalStorageService'
-// import BookWrapper from '../components/BookWrapper'
+import { connect } from 'react-redux'
+import { BookActions } from '../redux/entities/book/actions'
 import BookList from '../components/BookList'
 import BookFilter from '../components/BookFilter'
+import BookDetailsModal from '../components/BookDetailsModal'
 
-import { connect } from 'react-redux'
-import { bookActions } from '../redux/entities/book/actions'
 
-class App extends Component {
+export class App extends React.Component {
   state = {
     books: [],
     fetching: true,
@@ -27,6 +25,7 @@ class App extends Component {
       <Main>
         <BookFilter />
         <BookList />
+        {this.props.is_details_visible && <BookDetailsModal />}
       </Main>
     )
   }
@@ -41,8 +40,13 @@ const Main = styled.main`
   font-family: tahoma, sans-serif;
 `
 
-const mapDispatchToProps = dispatch => ({
-  list_books: () => dispatch(bookActions.list())
+// REDUX CONNECTION
+const mapStateToProps = state => ({
+  is_details_visible: state.ui.details.visible
 })
 
-export default connect(null, mapDispatchToProps)(App)
+const mapDispatchToProps = dispatch => ({
+  list_books: () => dispatch(BookActions.list())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -42,14 +42,14 @@ export const BookFilter = ({ books, set_filtered_books }) => {
         </FilterBox>
       </Section>
 
-      {/*<Section>
+      <Section>
       <Label htmlFor="library">Biblioteca: </Label>
 
       <FilterLibrarySelector id="library">
         <option value="literary" defaultValue>Biblioteca Literária</option>
         <option value="spiritual">Biblioteca Espiritual</option>
       </FilterLibrarySelector>
-    </Section>*/}
+    </Section>
     </Filter>
   )
 }
@@ -93,14 +93,14 @@ const FilterButton = styled.button`
   cursor: pointer;
 `
 
-// const FilterLibrarySelector = styled.select`
-//   box-sizing: border-box;
-//   height: 35px;
-//   width: 100%;
-//   background-color: transparent;
-//   border: 1px solid #ccc;
-//   border-radius: 3px;
-// `
+const FilterLibrarySelector = styled.select`
+  box-sizing: border-box;
+  height: 35px;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+`
 
 const Section = styled.div`
   & + & {

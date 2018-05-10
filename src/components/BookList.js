@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { UIDetailsActions } from '../redux/ui/details/actions'
 import BookCard from './BookCard'
 
-export const BookList = ({ books, onBookCardClick = () => {} }) => {
+export const BookList = ({ books, show_details }) => {
   return (
     <List>
       {books.map(book => (
@@ -14,7 +14,7 @@ export const BookList = ({ books, onBookCardClick = () => {} }) => {
           bookTitle={book.bookTitle}
           bookSubtitle={book.bookSubtitle}
           bookAuthor={book.bookAuthor}
-          onClick={onBookCardClick}
+          onClick={show_details}
         />
       ))}
     </List>
@@ -26,17 +26,12 @@ const List = styled.div`
   border-bottom: 1px solid #ccc;
 `
 
-BookList.propTypes = {
-  books: PropTypes.array,
-  onBookCardClick: PropTypes.func
-}
-
 const mapStateToProps = state => ({
   books: state.ui.list.books
 })
 
 const mapDispatchToProps = dispatch => ({
-
+  show_details: bookId => dispatch(UIDetailsActions.show(bookId))
 })
 
-export default connect(mapStateToProps)(BookList)
+export default connect(mapStateToProps, mapDispatchToProps)(BookList)

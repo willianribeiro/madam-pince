@@ -1,3 +1,6 @@
 export const LIST_PENDING = 'entities:book:LIST_PENDING'
 export const LIST_FULFILLED = 'entities:book:LIST_FULFILLED'
 export const LIST_REJECTED = 'entities:book:LIST_REJECTED'
+export const GET_PENDING = 'entities:book:GET_PENDING'
+export const GET_FULFILLED = 'entities:book:GET_FULFILLED'
+export const GET_REJECTED = 'entities:book:GET_REJECTED'

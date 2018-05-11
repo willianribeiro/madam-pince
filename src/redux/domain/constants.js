@@ -1,0 +1,1 @@
+export const CONFIGURE_LIBRARIES = 'domain:CONFIGURE_LIBRARIES'

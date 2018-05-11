@@ -1,7 +1,7 @@
 import React from 'react'
 
 const NoResult = () => (
-  <strong style={{ display: 'block', padding: '1.5em 1em' }}>
+  <strong style={{ display: 'block', textAlign: 'center', padding: '1.5em 1em' }}>
     Nenhum livro encontrado.
   </strong>
 )

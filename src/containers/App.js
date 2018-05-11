@@ -18,11 +18,9 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    const default_library= LIBRARIES[0]
-    const libraryId = default_library.id
-    const fields = default_library.fields
-    this.props.list_books(libraryId, fields)
+    const libraryId = LIBRARIES[0].id
     this.props.configure_libraries(LIBRARIES)
+    this.props.list_books(libraryId)
   }
 
   render() {

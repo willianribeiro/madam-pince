@@ -9,8 +9,9 @@ export const BookActions = {
 }
 
 // THUNKS (ASYNC)
-function list(libraryId, fields) {
+function list(libraryId) {
   return (dispatch, getState) => {
+    const fields = getState().domain.libraries.filter(lib => lib.id === libraryId)[0].fields
     dispatch(actionCreators.list_pending())
 
     return MadamPinceApi.list_entries(libraryId, fields)

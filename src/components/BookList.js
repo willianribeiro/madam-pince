@@ -3,17 +3,16 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { UIDetailsActions } from '../redux/ui/details/actions'
 import BookCard from './BookCard'
-// import NoResult from './NoResult'
+import NoResult from './NoResult'
 
 export const BookList = ({ books, listing, show_details }) => {
+  const should_show_loading = () => listing
+  const should_show_no_result = () => !listing && books.length === 0
+  const should_show_books = () => !listing && books.length > 0
+
   return (
     <List>
-      {listing &&
-        <ListLoading>
-          Olá! Aguarde um pouco que estamos carregando o acervo (=
-        </ListLoading>
-      }
-      {books.map(book => (
+      {should_show_books() && books.map(book => (
         <BookCard
           key={book.bookId}
           bookId={book.bookId}
@@ -23,6 +22,14 @@ export const BookList = ({ books, listing, show_details }) => {
           onClick={show_details}
         />
       ))}
+
+      {should_show_loading() &&
+        <ListLoading>
+          Olá! Aguarde um pouco que estamos carregando o acervo (=
+        </ListLoading>
+      }
+
+      {should_show_no_result() && <NoResult />}
     </List>
   )
 }

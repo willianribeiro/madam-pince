@@ -3,8 +3,13 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { accent_fold } from '../utils'
 import { UIListActions } from '../redux/ui/list/actions'
+import { BookActions } from '../redux/entities/book/actions'
 
-export const BookFilter = ({ books, set_filtered_books }) => {
+export const BookFilter = ({ books, libraries, set_filtered_books, list_books }) => {
+  const onLibraryChange = e => {
+    const libraryId = e.target.value
+    list_books(libraryId)
+  }
 
   const filter = e => {
     e.preventDefault()
@@ -45,9 +50,10 @@ export const BookFilter = ({ books, set_filtered_books }) => {
       <Section>
       <Label htmlFor="library">Biblioteca: </Label>
 
-      <FilterLibrarySelector id="library">
-        <option value="literary" defaultValue>Biblioteca Literária</option>
-        <option value="spiritual">Biblioteca Espiritual</option>
+      <FilterLibrarySelector id="library" onClick={onLibraryChange}>
+        {libraries.map(library => {
+          return <option value={library.id} key={library.id}>{library.name}</option>
+        })}
       </FilterLibrarySelector>
     </Section>
     </Filter>
@@ -115,10 +121,12 @@ const Label = styled.label`
 `
 
 const mapStateToProps = state => ({
-  books: state.entities.book.entries
+  books: state.entities.book.entries,
+  libraries: state.domain.libraries
 })
 
 const mapDispatchToProps = dispatch => ({
+  list_books: libraryId => dispatch(BookActions.list(libraryId)),
   set_filtered_books: books => dispatch(UIListActions.set_filtered_books(books))
 })
 

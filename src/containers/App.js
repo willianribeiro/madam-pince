@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import { LIBRARIES } from '../config'
 import { BookActions } from '../redux/entities/book/actions'
+import { DomainActions } from '../redux/domain/actions'
 import BookList from '../components/BookList'
 import BookFilter from '../components/BookFilter'
 import BookDetailsModal from '../components/BookDetailsModal'
@@ -16,7 +18,11 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.list_books()
+    const default_library= LIBRARIES[0]
+    const libraryId = default_library.id
+    const fields = default_library.fields
+    this.props.list_books(libraryId, fields)
+    this.props.configure_libraries(LIBRARIES)
   }
 
   render() {
@@ -46,7 +52,13 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  list_books: () => dispatch(BookActions.list())
+  list_books: (libraryId, fields) => {
+    dispatch(BookActions.list(libraryId, fields))
+  },
+
+  configure_libraries: libraries => {
+    dispatch(DomainActions.configure_libraries(libraries))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

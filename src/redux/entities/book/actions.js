@@ -9,11 +9,11 @@ export const BookActions = {
 }
 
 // THUNKS (ASYNC)
-function list(libraryId = 'jQSwnoG2p') {
+function list(libraryId, fields) {
   return (dispatch, getState) => {
     dispatch(actionCreators.list_pending())
 
-    return MadamPinceApi.list_entries(libraryId)
+    return MadamPinceApi.list_entries(libraryId, fields)
       .then(books => {
         dispatch(actionCreators.list_fulfilled(books))
         dispatch(UIListActions.set_filtered_books(books))

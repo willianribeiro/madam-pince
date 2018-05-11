@@ -1,5 +1,6 @@
 import actionCreators from './action-creators'
 import MadamPinceApi from '../../../services/MadamPinceApi'
+import { UIListActions } from '../../ui/list/actions';
 
 // EXPORT THUNKS
 export const BookActions = {
@@ -15,6 +16,7 @@ function list(libraryId = 'jQSwnoG2p') {
     return MadamPinceApi.list_entries(libraryId)
       .then(books => {
         dispatch(actionCreators.list_fulfilled(books))
+        dispatch(UIListActions.set_filtered_books(books))
       })
       .catch(error => {
         dispatch(actionCreators.list_rejected())

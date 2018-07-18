@@ -11,10 +11,9 @@ export const BookActions = {
 // THUNKS (ASYNC)
 function list(libraryId) {
   return (dispatch, getState) => {
-    const fields = getState().domain.libraries.filter(lib => lib.id === libraryId)[0].fields
     dispatch(actionCreators.list_pending())
 
-    return MadamPinceApi.list_entries(libraryId, fields)
+    return MadamPinceApi.list_library_entries(libraryId)
       .then(books => {
         dispatch(actionCreators.list_fulfilled(books))
         dispatch(UIListActions.set_filtered_books(books))
@@ -26,11 +25,11 @@ function list(libraryId) {
   }
 }
 
-function get(id, libraryId = 'jQSwnoG2p') {
+function get(entryId, libraryId) {
   return (dispatch, getState) => {
     dispatch(actionCreators.get_pending())
 
-    return MadamPinceApi.get_entry(id, libraryId)
+    return MadamPinceApi.get_library_entry(entryId, libraryId)
       .then(book => {
         dispatch(actionCreators.get_fulfilled(book))
       })

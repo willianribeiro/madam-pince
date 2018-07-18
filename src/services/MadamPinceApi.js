@@ -1,11 +1,11 @@
 import MementoApi from './MementoApi'
 import { accent_fold } from '../utils'
-import { USER_TOKEN, LIBRARY_ID } from '../config'
+import { USER_TOKEN, LIBRARIES } from '../config'
 
 const api = {
   get_library,
-  list_entries,
-  get_entry
+  list_library_entries,
+  get_library_entry
 }
 
 function get_library(libraryId) {
@@ -13,14 +13,15 @@ function get_library(libraryId) {
   return MementoApi.get_library(libraryId, params)
 }
 
-function list_entries(libraryId, fields) {
+function list_library_entries(libraryId) {
+  const library = LIBRARIES.filter(library => library.id === libraryId)[0]
   const params = {
     token: USER_TOKEN,
     pageSize: 1500,
-    fields: fields
+    fields: library.fields
   }
 
-  return MementoApi.list_entries(libraryId, params)
+  return MementoApi.list_library_entries(libraryId, params)
     .then(response => response.entries)
     .then(books => {
       const actives = _filter_only_actives(books)
@@ -30,9 +31,9 @@ function list_entries(libraryId, fields) {
     })
 }
 
-function get_entry(id, libraryId) {
+function get_library_entry(entryId, libraryId) {
   const params = { token: USER_TOKEN }
-  return MementoApi.get_entry(id, LIBRARY_ID, params)
+  return MementoApi.get_library_entry(entryId, libraryId, params)
 }
 
 // HELPERS

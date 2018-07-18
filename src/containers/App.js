@@ -50,8 +50,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  list_books: (libraryId, fields) => {
-    dispatch(BookActions.list(libraryId, fields))
+  list_books: (libraryId) => {
+    dispatch(BookActions.list(libraryId))
   },
 
   configure_libraries: libraries => {

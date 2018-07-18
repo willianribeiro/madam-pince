@@ -4,8 +4,8 @@ import { API_URL } from '../config.js'
 const api = {
   list_libraries,
   get_library,
-  list_entries,
-  get_entry
+  list_library_entries,
+  get_library_entry
 }
 
 // PUBLIC FUNCTIONS
@@ -14,7 +14,7 @@ function list_libraries(params) {
   const url = `${API_URL}/libraries?${query}`
   return fetch(url)
     .then(response => response.json())
-    .catch(error => error)
+    .catch(error => console.log(error))
 }
 
 function get_library(id, params) {
@@ -22,23 +22,23 @@ function get_library(id, params) {
   const url = `${API_URL}/libraries/${id}?${query}`
   return fetch(url)
     .then(response => response.json())
-    .catch(error => error)
+    .catch(error => console.log(error))
 }
 
-function list_entries(libraryId, params) {
+function list_library_entries(libraryId, params) {
   const query = _generate_query_string(params)
   const url = `${API_URL}/libraries/${libraryId}/entries?${query}`
   return fetch(url)
     .then(response => response.json())
-    .catch(error => error)
+    .catch(error => console.log(error))
 }
 
-function get_entry(entryId, libraryId, params) {
+function get_library_entry(entryId, libraryId, params) {
   const query = _generate_query_string(params)
   const url = `${API_URL}/libraries/${libraryId}/entries/${entryId}?${query}`
   return fetch(url)
     .then(response => response.json())
-    .catch(error => error)
+    .catch(error => console.log(error))
 }
 
 // PRIVATE FUNCTIONS

@@ -5,9 +5,9 @@ import { UIDetailsActions } from '../redux/ui/details/actions'
 import BookCard from './BookCard'
 import NoResult from './NoResult'
 
-export const BookList = ({ books, listing, show_details }) => {
-  const should_show_loading = () => listing
-  const should_show_no_result = () => !listing && books.length === 0
+export const BookList = ({ books, listing, updating_library, show_details }) => {
+  const should_show_loading = () => listing || updating_library
+  const should_show_no_result = () => !listing && !updating_library && books.length === 0
   const should_show_books = () => !listing && books.length > 0
 
   return (
@@ -46,7 +46,8 @@ const ListLoading = styled.div`
 
 const mapStateToProps = state => ({
   books: state.ui.list.books,
-  listing: state.entities.book.listing
+  listing: state.entities.book.listing,
+  updating_library: state.entities.book.listing_if_needed
 })
 
 const mapDispatchToProps = dispatch => ({

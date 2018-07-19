@@ -9,17 +9,15 @@ import BookList from '../components/BookList'
 import BookFilter from '../components/BookFilter'
 import BookDetailsModal from '../components/BookDetailsModal'
 
-export class App extends React.Component {
+export class App extends React.PureComponent {
   componentDidMount() {
     const default_library_id = LIBRARIES[0].id
     this.props.load_libraries(LIBRARIES)
     this.props.set_default_library(default_library_id)
-    this.props.list_books(default_library_id)
-
+    this.props.list_books_if_needed(default_library_id)
   }
 
   render() {
-
     return (
       <Main>
         <BookFilter />
@@ -49,8 +47,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(DomainActions.load_libraries(libraries))
   },
 
-  list_books: (libraryId) => {
-    dispatch(BookActions.list(libraryId))
+  list_books_if_needed: (libraryId) => {
+    dispatch(BookActions.list_if_needed(libraryId))
   },
 
   set_default_library: library_id => {

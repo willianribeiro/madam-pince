@@ -3,6 +3,9 @@ import {
   LIST_PENDING,
   LIST_FULFILLED,
   LIST_REJECTED,
+  LIST_IF_NEEDED_PENDING,
+  LIST_IF_NEEDED_FULFILLED,
+  LIST_IF_NEEDED_REJECTED,
   GET_PENDING,
   GET_FULFILLED,
   GET_REJECTED,
@@ -12,6 +15,7 @@ const initialState = {
   entries: [],
   entry: {},
   listing: false,
+  listing_if_needed: false,
   getting: false,
 }
 
@@ -30,6 +34,21 @@ const bookReducer = createReducer(initialState, {
   [LIST_REJECTED]: (state, action) => ({
     ...state,
     listing: false
+  }),
+
+  [LIST_IF_NEEDED_PENDING]: (state, action) => ({
+    ...state,
+    listing_if_needed: true
+  }),
+
+  [LIST_IF_NEEDED_FULFILLED]: (state, action) => ({
+    ...state,
+    listing_if_needed: false
+  }),
+
+  [LIST_IF_NEEDED_REJECTED]: (state, action) => ({
+    ...state,
+    listing_if_needed: false
   }),
 
   [GET_PENDING]: (state, action) => ({

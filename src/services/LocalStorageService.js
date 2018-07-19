@@ -1,20 +1,18 @@
 const LocalStorageService = (() => {
   const service = {
-    save_books,
-    load_books
+    save_library,
+    load_library
   }
-
-  const LIBRARY_NAME = 'madam_pince_library'
 
   // public functions
-  function save_books(books = {}) {
-    const library = { lastUpdated: Date(), books: books }
-    localStorage.setItem(LIBRARY_NAME, JSON.stringify(library))
+  function save_library({ library_id, library_revision, books }) {
+    const library = { library_id, library_revision, books }
+    localStorage.setItem(library_id, JSON.stringify(library))
   }
 
-  function load_books() {
-    const library = JSON.parse(localStorage.getItem(LIBRARY_NAME)) || {}
-    return library.books
+  function load_library(library_id) {
+    const library = JSON.parse(localStorage.getItem(library_id))
+    return library
   }
 
   return service

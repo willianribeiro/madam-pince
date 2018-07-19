@@ -12,7 +12,7 @@ import BookDetailsModal from '../components/BookDetailsModal'
 export class App extends React.PureComponent {
   componentDidMount() {
     const default_library_id = LIBRARIES[0].id
-    this.props.load_libraries(LIBRARIES)
+    this.props.load_libraries_select_options(LIBRARIES)
     this.props.set_default_library(default_library_id)
     this.props.list_books_if_needed(default_library_id)
   }
@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  load_libraries: libraries => {
+  load_libraries_select_options: libraries => {
     dispatch(DomainActions.load_libraries(libraries))
   },
 

@@ -17,7 +17,7 @@ function list_library_entries(libraryId) {
   const library = LIBRARIES.filter(library => library.id === libraryId)[0]
   const params = {
     token: USER_TOKEN,
-    pageSize: 1500,
+    pageSize: 5000,
     fields: library.fields
   }
 
@@ -43,12 +43,17 @@ function _filter_only_actives(books = []) {
 
 function _shape_books(books = []) {
   return books.map(book => {
+    const bookId = book.id
+    const bookTitle = book.fields[0] ? book.fields[0].value : ''
+    const bookSubtitle = book.fields[1] ? book.fields[1].value : ''
+    const bookAuthor = book.fields[2] ? book.fields[2].value : ''
+
     return {
       ...book,
-      bookId: book.id,
-      bookTitle: book.fields[0].value,
-      bookSubtitle: book.fields[1].value,
-      bookAuthor: book.fields[2].value
+      bookId,
+      bookTitle,
+      bookSubtitle,
+      bookAuthor
     }
   })
 }

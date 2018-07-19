@@ -9,15 +9,7 @@ import BookList from '../components/BookList'
 import BookFilter from '../components/BookFilter'
 import BookDetailsModal from '../components/BookDetailsModal'
 
-
 export class App extends React.Component {
-  state = {
-    books: [],
-    fetching: true,
-    error: null,
-    didInvalidate: false
-  }
-
   componentDidMount() {
     const default_library_id = LIBRARIES[0].id
     this.props.load_libraries(LIBRARIES)

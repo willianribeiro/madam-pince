@@ -1,14 +1,14 @@
-import { CONFIGURE_LIBRARIES } from './constants'
+import { LOAD_LIBRARIES } from './constants'
 
 // EXPORT ACTION CREATORS
 export default {
-  configure_libraries,
+  load_libraries,
 }
 
 // ACTION CREATORS
-function configure_libraries(libraries) {
+function load_libraries(libraries) {
   return {
-    type: CONFIGURE_LIBRARIES,
+    type: LOAD_LIBRARIES,
     payload: { libraries }
   }
 }

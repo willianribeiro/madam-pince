@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { LIBRARIES } from '../config'
 import { BookActions } from '../redux/entities/book/actions'
 import { DomainActions } from '../redux/domain/actions'
+import { UIGlobalActions } from '../redux/ui/global/actions'
 import BookList from '../components/BookList'
 import BookFilter from '../components/BookFilter'
 import BookDetailsModal from '../components/BookDetailsModal'
@@ -18,9 +19,11 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    const libraryId = LIBRARIES[0].id
-    this.props.configure_libraries(LIBRARIES)
-    this.props.list_books(libraryId)
+    const default_library_id = LIBRARIES[0].id
+    this.props.load_libraries(LIBRARIES)
+    this.props.set_default_library(default_library_id)
+    this.props.list_books(default_library_id)
+
   }
 
   render() {
@@ -50,13 +53,17 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  load_libraries: libraries => {
+    dispatch(DomainActions.load_libraries(libraries))
+  },
+
   list_books: (libraryId) => {
     dispatch(BookActions.list(libraryId))
   },
 
-  configure_libraries: libraries => {
-    dispatch(DomainActions.configure_libraries(libraries))
-  }
+  set_default_library: library_id => {
+    dispatch(UIGlobalActions.change_selected_library_id(library_id))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

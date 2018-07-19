@@ -4,10 +4,18 @@ import { connect } from 'react-redux'
 import { accent_fold } from '../utils'
 import { UIListActions } from '../redux/ui/list/actions'
 import { BookActions } from '../redux/entities/book/actions'
+import { UIGlobalActions } from '../redux/ui/global/actions'
 
-export const BookFilter = ({ books, libraries, set_filtered_books, list_books }) => {
+export const BookFilter = ({
+  books,
+  libraries,
+  set_filtered_books,
+  list_books,
+  set_selected_library_id
+}) => {
   const onLibraryChange = e => {
     const libraryId = e.target.value
+    set_selected_library_id(libraryId)
     list_books(libraryId)
   }
 
@@ -50,7 +58,7 @@ export const BookFilter = ({ books, libraries, set_filtered_books, list_books })
       <Section>
       <Label htmlFor="library">Biblioteca: </Label>
 
-      <FilterLibrarySelector id="library" onClick={onLibraryChange}>
+      <FilterLibrarySelector id="library" onChange={onLibraryChange}>
         {libraries.map(library => {
           return <option value={library.id} key={library.id}>{library.name}</option>
         })}
@@ -127,7 +135,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   list_books: libraryId => dispatch(BookActions.list(libraryId)),
-  set_filtered_books: books => dispatch(UIListActions.set_filtered_books(books))
+  set_filtered_books: books => dispatch(UIListActions.set_filtered_books(books)),
+  set_selected_library_id: library_id => dispatch(UIGlobalActions.change_selected_library_id(library_id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookFilter)

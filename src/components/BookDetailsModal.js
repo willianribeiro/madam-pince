@@ -7,7 +7,8 @@ import { UIDetailsActions } from '../redux/ui/details/actions'
 class BookDetailsModal extends React.PureComponent {
 
   componentDidMount() {
-    this.props.get_book(this.props.bookId)
+    const { bookId, selected_library_id, get_book } = this.props
+    get_book(bookId, selected_library_id)
     document.body.style = 'overflow: hidden'
   }
 
@@ -135,10 +136,11 @@ const BookFieldValue = styled.p`
 const mapStateToProps = state => ({
   bookId: state.ui.details.bookId,
   book: state.entities.book.entry,
+  selected_library_id: state.ui.global.selected_library_id
 })
 
 const mapDispatchToProps = dispatch => ({
-  get_book: bookId => dispatch(BookActions.get(bookId)),
+  get_book: (bookId, selected_library_id) => dispatch(BookActions.get(bookId, selected_library_id)),
   hide: () => dispatch(UIDetailsActions.hide())
 })
 

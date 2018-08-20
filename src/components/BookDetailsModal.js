@@ -14,6 +14,7 @@ class BookDetailsModal extends React.PureComponent {
 
   componentWillUnmount() {
     document.body.style = 'overflow: initial'
+    this.props.reset_entry()
   }
 
   getBookCoverUrl = () => {
@@ -153,7 +154,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   get_book: (bookId, selected_library_id) => dispatch(BookActions.get(bookId, selected_library_id)),
-  hide: () => dispatch(UIDetailsActions.hide())
+  hide: () => dispatch(UIDetailsActions.hide()),
+  reset_entry: () => dispatch(BookActions.reset_entry())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookDetailsModal)

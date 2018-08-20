@@ -7,7 +7,8 @@ import { LibraryActions } from '../../entities/library/actions'
 export const BookActions = {
   list,
   list_if_needed,
-  get
+  get,
+  reset_entry
 }
 
 // THUNKS (ASYNC)
@@ -64,6 +65,13 @@ function get(entryId, libraryId) {
         dispatch(actionCreators.get_rejected())
         console.error(error)
       })
+  }
+}
+
+// THUNKS (SYNC)
+function reset_entry() {
+  return (dispatch, getState) => {
+    dispatch(actionCreators.reset_entry())
   }
 }
 

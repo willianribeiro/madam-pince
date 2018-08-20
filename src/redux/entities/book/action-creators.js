@@ -8,6 +8,7 @@ import {
   GET_PENDING,
   GET_FULFILLED,
   GET_REJECTED,
+  RESET_ENTRY
 } from './constants'
 
 // EXPORT ACTION CREATORS
@@ -21,6 +22,7 @@ export default {
   get_pending,
   get_fulfilled,
   get_rejected,
+  reset_entry
 }
 
 // ACTION CREATORS
@@ -77,5 +79,11 @@ function get_fulfilled(book) {
 function get_rejected() {
   return {
     type: GET_REJECTED
+  }
+}
+
+function reset_entry() {
+  return {
+    type: RESET_ENTRY
   }
 }

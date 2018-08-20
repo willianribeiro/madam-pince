@@ -9,6 +9,7 @@ import {
   GET_PENDING,
   GET_FULFILLED,
   GET_REJECTED,
+  RESET_ENTRY,
 } from './constants'
 
 const initialState = {
@@ -67,6 +68,10 @@ const bookReducer = createReducer(initialState, {
     getting: false
   }),
 
+  [RESET_ENTRY]: (state, action) => ({
+    ...state,
+    entry: {}
+  })
 })
 
 export default bookReducer

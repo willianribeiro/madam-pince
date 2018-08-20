@@ -43,6 +43,14 @@ class BookDetailsModal extends React.PureComponent {
     e.preventDefault()
   }
 
+  shouldShowField = fieldValue => {
+    return (
+      fieldValue !== undefined &&
+      fieldValue !== null &&
+      fieldValue !== ''
+    )
+  }
+
   render() {
     const { hide } = this.props
     const coverUrl = this.getBookCoverUrl()
@@ -58,12 +66,16 @@ class BookDetailsModal extends React.PureComponent {
           </BookCover>
 
           <BookFields>
-            {fields.map(field => (
-              <BookField key={field.id}>
-                <BookFieldTitle>{field.name}:</BookFieldTitle>
-                <BookFieldValue>{field.value || '–'}</BookFieldValue>
-              </BookField>
-            ))}
+            {fields.map(field => {
+              return this.shouldShowField(field.value)
+                ? (
+                  <BookField key={field.id}>
+                    <BookFieldTitle>{field.name}:</BookFieldTitle>
+                    <BookFieldValue>{field.value || '–'}</BookFieldValue>
+                  </BookField>
+                )
+                : null
+            })}
           </BookFields>
         </ModalBox>
       </Modal>

@@ -88,6 +88,7 @@ const FilterInput = styled.input`
   padding: 0 4px;
   border-radius: 3px 0 0 3px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 
   &:focus {
     outline: none;
@@ -115,6 +116,7 @@ const FilterLibrarySelector = styled.select`
   background-color: transparent;
   border: 1px solid #ccc;
   border-radius: 3px;
+  font-size: 1rem;
 `
 
 const Section = styled.div`

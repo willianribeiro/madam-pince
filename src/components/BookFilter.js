@@ -71,6 +71,7 @@ export const BookFilter = ({
 const Filter = styled.form`
   width: 100%;
   max-width: 500px;
+  padding: 16px;
   margin: 0 auto 40px auto;
 `
 

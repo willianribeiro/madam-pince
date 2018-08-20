@@ -28,7 +28,7 @@ class BookDetailsModal extends React.PureComponent {
 
     return covers.length > 0
       ? covers[0].value
-      : "https://place-hold.it/150x250"
+      : "http://via.placeholder.com/150x250"
   }
 
   getFieldsToList = () => {
@@ -122,6 +122,7 @@ const ModalCloseButton = styled.div`
 
 const BookCover = styled.div`
   margin-bottom: 16px;
+  text-align: center;
 `
 
 const BookCoverImg = styled.img`

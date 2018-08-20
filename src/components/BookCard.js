@@ -38,16 +38,15 @@ const Card = styled.article`
 `
 
 const BookTitle = styled.h2`
-  font-size: 1.5rem
+  font-size: 1.5rem;
 `
 
 const BookSubtitle = styled.p`
-  margin-top: .3rem;
   font-size: 1.3rem;
-  `
+`
 
 const BookAuthor = styled.p`
-  margin-top: 1rem;
+  margin-top: .2rem;
   font-size: 1rem;
 `
 const BookCode = styled.p`
@@ -63,7 +62,7 @@ const BookStatus = styled.span`
 const BookFooter = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
+  margin-top: 1rem;
   font-size: .8rem;
   color: #666;
 `

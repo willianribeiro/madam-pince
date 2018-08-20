@@ -56,20 +56,8 @@ function get(entryId, libraryId) {
 
     return MadamPinceApi.get_library_entry(entryId, libraryId)
       .then(book => {
-        const fieldsToRemove = [
-          'Emprestado para',
-          'checkNoPicture',
-          'checkLendInconsistence',
-          'checkCodigoInconsistence'
-        ]
-        const onlyAllowedFields = book.fields.filter(field => {
-          const shouldRemoveField = fieldsToRemove.some(fieldToRemove => fieldToRemove === field.name)
-          return shouldRemoveField
-            ? false
-            : true
-        })
-
-        book.fields = onlyAllowedFields
+        book.fields = _remove_not_allowed_fieds(book.fields)
+        book.fields = _format_dates(book.fields)
         dispatch(actionCreators.get_fulfilled(book))
       })
       .catch(error => {
@@ -94,3 +82,42 @@ function _has_local_library(local_library) {
 function _is_library_out_of_date(local_library, remote_library) {
   return local_library.revision !== remote_library.revision
 }
+
+function _remove_not_allowed_fieds(fields) {
+  const fieldsToRemove = [
+    'Emprestado para',
+    'checkNoPicture',
+    'checkLendInconsistence',
+    'checkCodigoInconsistence'
+  ]
+
+  return fields.filter(field => {
+    const shouldRemoveField = fieldsToRemove.some(fieldToRemove => fieldToRemove === field.name)
+    return shouldRemoveField
+      ? false
+      : true
+  })
+}
+
+function _format_dates(fields) {
+  return fields.map(field => {
+    if (_should_format_date(field.name, field.value)) {
+      return {
+        ...field,
+        value: new Date(field.value).toLocaleDateString('pt-br')
+      }
+    }
+    return field
+  })
+}
+
+function _should_format_date(fieldName, fieldValue) {
+  const date_fields = ['Data de publicação', 'Data de empréstimo']
+
+  return (
+    fieldValue &&
+    (fieldName === date_fields[0] || fieldName === date_fields[1])
+  )
+}
+
+//toLocaleDateString('pt-br')

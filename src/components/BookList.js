@@ -16,9 +16,11 @@ export const BookList = ({ books, listing, updating_library, show_details }) => 
         <BookCard
           key={book.bookId}
           bookId={book.bookId}
+          bookCode={book.bookCode}
           bookTitle={book.bookTitle}
           bookSubtitle={book.bookSubtitle}
           bookAuthor={book.bookAuthor}
+          bookStatus={book.bookStatus}
           onClick={show_details}
         />
       ))}

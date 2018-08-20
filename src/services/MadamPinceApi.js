@@ -44,16 +44,35 @@ function _filter_only_actives(books = []) {
 function _shape_books(books = []) {
   return books.map(book => {
     const bookId = book.id
-    const bookTitle = book.fields[0] ? book.fields[0].value : ''
-    const bookSubtitle = book.fields[1] ? book.fields[1].value : ''
-    const bookAuthor = book.fields[2] ? book.fields[2].value : ''
+    let bookCode = ''
+    let bookTitle = ''
+    let bookSubtitle = ''
+    let bookAuthor = ''
+    let bookStatus = ''
+
+    if (book.fields.length === 5) {
+      bookCode = book.fields[0] ? book.fields[0].value : ''
+      bookTitle = book.fields[1] ? book.fields[1].value : ''
+      bookSubtitle = book.fields[2] ? book.fields[2].value : ''
+      bookAuthor = book.fields[3] ? book.fields[3].value : ''
+      bookStatus = book.fields[4] ? book.fields[4].value : ''
+    }
+    else {
+      bookCode = book.fields[0] ? book.fields[0].value : ''
+      bookTitle = book.fields[1] ? book.fields[1].value : ''
+      bookAuthor = book.fields[2] ? book.fields[2].value : ''
+      bookStatus = book.fields[3] ? book.fields[3].value : ''
+      bookSubtitle = ''
+    }
 
     return {
       ...book,
       bookId,
+      bookCode,
       bookTitle,
       bookSubtitle,
-      bookAuthor
+      bookAuthor,
+      bookStatus
     }
   })
 }

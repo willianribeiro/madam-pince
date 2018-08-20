@@ -4,16 +4,22 @@ import styled from 'styled-components'
 
 const BookCard = ({
   bookId,
+  bookCode,
   bookTitle,
   bookSubtitle,
   bookAuthor,
+  bookStatus,
   onClick
 }) => {
   return (
     <Card onClick={() => onClick(bookId)} key={bookId}>
-      <CardTitle>{bookTitle}</CardTitle>
-      {bookSubtitle && <CardSubtitle>{bookSubtitle}</CardSubtitle>}
-      <CardAuthor>{bookAuthor}</CardAuthor>
+      <BookTitle>{bookTitle}</BookTitle>
+      {bookSubtitle && <BookSubtitle>{bookSubtitle}</BookSubtitle>}
+      <BookAuthor>{bookAuthor}</BookAuthor>
+      <BookFooter>
+        <BookCode>Código: {bookCode}</BookCode>
+        <BookStatus>{bookStatus}</BookStatus>
+      </BookFooter>
     </Card>
   )
 }
@@ -31,18 +37,35 @@ const Card = styled.article`
   }
 `
 
-const CardTitle = styled.h2`
+const BookTitle = styled.h2`
   font-size: 1.5rem
 `
 
-const CardSubtitle = styled.p`
+const BookSubtitle = styled.p`
   margin-top: .3rem;
   font-size: 1.3rem;
   `
 
-const CardAuthor = styled.p`
+const BookAuthor = styled.p`
   margin-top: 1rem;
   font-size: 1rem;
+`
+const BookCode = styled.p`
+
+`
+
+const BookStatus = styled.span`
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+`
+
+const BookFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: .8rem;
+  color: #666;
 `
 
 BookCard.propTypes = {

@@ -2,7 +2,6 @@ import actionCreators from './action-creators'
 import MadamPinceApi from '../../../services/MadamPinceApi'
 import { UIListActions } from '../../ui/list/actions'
 import { LibraryActions } from '../../entities/library/actions'
-import LocalStorageService from '../../../services/LocalStorageService';
 
 // EXPORT THUNKS
 export const BookActions = {
@@ -18,11 +17,6 @@ function list(libraryId) {
 
     return MadamPinceApi.list_library_entries(libraryId)
       .then(books => {
-        const library = getState().entities.library.byId[libraryId]
-        const library_id = library.id
-        const library_revision = library.revision
-
-        LocalStorageService.save_library({ library_id, library_revision, books })
         dispatch(actionCreators.list_fulfilled(books))
         dispatch(UIListActions.set_filtered_books(books))
       })

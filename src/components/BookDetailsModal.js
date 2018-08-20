@@ -37,7 +37,7 @@ class BookDetailsModal extends React.PureComponent {
     const fields = this.props.book.fields || []
 
     return fields.filter(field => {
-      return (field.id !== 30 && field.id !== 31 && field.id !== 8)
+      return field.type !== 'image'
     })
   }
 
@@ -52,6 +52,10 @@ class BookDetailsModal extends React.PureComponent {
       fieldValue !== null &&
       fieldValue !== ''
     )
+  }
+
+  isHiperlink = fieldType => {
+    return fieldType === 'url'
   }
 
   render() {
@@ -71,12 +75,19 @@ class BookDetailsModal extends React.PureComponent {
           <BookFields>
             {fields.map(field => {
               return this.shouldShowField(field.value)
-                ? (
-                  <BookField key={field.id}>
-                    <BookFieldTitle>{field.name}:</BookFieldTitle>
-                    <BookFieldValue>{field.value || '–'}</BookFieldValue>
-                  </BookField>
-                )
+                ? this.isHiperlink(field.type)
+                  ? (
+                    <BookField key={field.id}>
+                      <BookFieldTitle>{field.name}:</BookFieldTitle>
+                      <a href={field.value} target="_blank">{field.value}</a>
+                    </BookField>
+                  )
+                  : (
+                    <BookField key={field.id}>
+                      <BookFieldTitle>{field.name}:</BookFieldTitle>
+                      <BookFieldValue>{field.value}</BookFieldValue>
+                    </BookField>
+                  )
                 : null
             })}
           </BookFields>

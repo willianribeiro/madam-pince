@@ -10,10 +10,12 @@ class BookDetailsModal extends React.PureComponent {
     const { bookId, selected_library_id, get_book } = this.props
     get_book(bookId, selected_library_id)
     document.body.style = 'overflow: hidden'
+    document.addEventListener("keydown", this.props.hide, false)
   }
 
   componentWillUnmount() {
     document.body.style = 'overflow: initial'
+    document.removeEventListener("keydown", this.props.hide, false)
     this.props.reset_entry()
   }
 

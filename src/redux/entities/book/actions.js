@@ -56,6 +56,20 @@ function get(entryId, libraryId) {
 
     return MadamPinceApi.get_library_entry(entryId, libraryId)
       .then(book => {
+        const fieldsToRemove = [
+          'Emprestado para',
+          'checkNoPicture',
+          'checkLendInconsistence',
+          'checkCodigoInconsistence'
+        ]
+        const onlyAllowedFields = book.fields.filter(field => {
+          const shouldRemoveField = fieldsToRemove.some(fieldToRemove => fieldToRemove === field.name)
+          return shouldRemoveField
+            ? false
+            : true
+        })
+
+        book.fields = onlyAllowedFields
         dispatch(actionCreators.get_fulfilled(book))
       })
       .catch(error => {
